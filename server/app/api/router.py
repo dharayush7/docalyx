@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-from .endpoints import health_router
+from .endpoints import health_router, pdf_router
 
 api_router = APIRouter()
 api_router.include_router(health_router)
+api_router.include_router(pdf_router, prefix="/pdf")
