@@ -1,28 +1,18 @@
 import os
+import socketio
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from .api import api_router
+from app.socket.server import sio
+import app.socket.event
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 IS_DEVELOPMENT = ENVIRONMENT == "development"
 
-app = FastAPI(
-    title="PDF AI API",
-    description="API for PDF AI processing",
-    version="1.0.0",
-)
 
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"] if IS_DEVELOPMENT else [],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI()
+socket_app = socketio.ASGIApp(sio, app)
 
-# Include API router
-app.include_router(api_router)
+
+app = socket_app
 
 
 def main():

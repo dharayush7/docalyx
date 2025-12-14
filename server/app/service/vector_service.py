@@ -1,7 +1,7 @@
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.documents import Document
 from app.module import constant
-from app.module import embedding_model
+from app.module.embedding_model import embedding_model
 
 
 def create_vector_store(docs: list[Document], name: str):
