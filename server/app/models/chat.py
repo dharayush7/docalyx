@@ -1,7 +1,8 @@
 import uuid
 from .base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey, String, DateTime, func, UUID
+from sqlalchemy import ForeignKey, String, DateTime, func
+from sqlalchemy.dialects.postgresql import UUID
 
 
 class Chat(Base):
@@ -19,24 +20,23 @@ class Chat(Base):
         default="New Chat"
     )
 
-    # MANY chats → ONE user
-    user_id: Mapped[int] = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
-        index=True
+        index=True,
+        nullable=False
     )
 
     user: Mapped["User"] = relationship(
         back_populates="chats"
     )
 
-    # ONE chat → ONE document
     document: Mapped["Document"] = relationship(
         back_populates="chat",
         uselist=False,
         cascade="all, delete-orphan"
     )
 
-    # ONE chat → MANY messages (later)
     messages: Mapped[list["Message"]] = relationship(
         back_populates="chat",
         cascade="all, delete-orphan"

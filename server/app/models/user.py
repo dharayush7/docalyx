@@ -1,23 +1,20 @@
 import uuid
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, DateTime, func
+from sqlalchemy.dialects.postgresql import UUID
 from app.models.base import Base
 
 
 class User(Base):
     __tablename__ = "users"
 
-    # Prisma cuid() → use UUID string in SQLAlchemy
-    id: Mapped[str] = mapped_column(
-        String(36),
+    id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
         primary_key=True,
-        default=lambda: str(uuid.uuid4())
+        default=uuid.uuid4
     )
 
-    name: Mapped[str] = mapped_column(
-        String(255),
-        nullable=False
-    )
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
 
     email: Mapped[str] = mapped_column(
         String(255),
@@ -50,4 +47,9 @@ class User(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now()
+    )
+
+    chats: Mapped[list["Chat"]] = relationship(
+        back_populates="user",
+        cascade="all, delete-orphan"
     )

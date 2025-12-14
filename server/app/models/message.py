@@ -1,8 +1,16 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey, Text, DateTime, Boolean, func
+from sqlalchemy import (
+    ForeignKey,
+    Text,
+    DateTime,
+    Boolean,
+    func,
+    Enum,
+    Index,
+)
 from sqlalchemy.dialects.postgresql import UUID
-from .base import Base
+from app.models.base import Base
 
 
 class Message(Base):
@@ -14,14 +22,19 @@ class Message(Base):
         default=uuid.uuid4
     )
 
-    chat_id: Mapped[int] = mapped_column(
+    chat_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
         ForeignKey("chats.id", ondelete="CASCADE"),
-        index=True
+        index=True,
+        nullable=False
     )
 
-    role: Mapped[str]
+    role: Mapped[str] = mapped_column(
+        Enum("user", "assistant", "system", name="message_role"),
+        nullable=False
+    )
 
-    content: Mapped[str] = mapped_column(Text)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
 
     is_summary: Mapped[bool] = mapped_column(
         Boolean,
@@ -42,4 +55,8 @@ class Message(Base):
         DateTime(timezone=True),
         server_default=func.now(),
         onupdate=func.now()
+    )
+
+    __table_args__ = (
+        Index("ix_messages_chat_summary", "chat_id", "is_summary"),
     )
