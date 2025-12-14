@@ -11,19 +11,19 @@ export default async function page() {
     return redirect("/");
   }
 
-  const databaseUser = await prisma.user.findUnique({
+  const databaseUser = await prisma.users.findUnique({
     where: {
-      kindeUserId: user.id,
+      kinde_user_id: user.id,
     },
   });
 
   if (!databaseUser) {
-    await prisma.user.create({
+    await prisma.users.create({
       data: {
         email: user.email!,
         name: user.family_name || "",
-        kindeUserId: user.id,
-        avaterUrl: user.picture,
+        kinde_user_id: user.id,
+        avatar_url: user.picture,
       },
     });
 
