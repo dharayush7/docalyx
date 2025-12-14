@@ -1,6 +1,6 @@
 import asyncio
 from app.service.db_session import engine
-from app.model.base import Base
+from app.models.base import Base
 from app.db.init_models import *  # 👈 THIS is the key line
 
 

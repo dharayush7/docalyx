@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, DateTime, func
-from app.model.base import Base
+from app.models.base import Base
 
 
 class User(Base):
