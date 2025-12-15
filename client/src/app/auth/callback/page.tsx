@@ -1,4 +1,3 @@
-import React from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
@@ -30,5 +29,5 @@ export default async function page() {
     return redirect("/");
   }
 
-  return <div>page</div>;
+  return redirect("/");
 }
