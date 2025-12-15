@@ -19,12 +19,11 @@ class Document(Base):
         nullable=False
     )
 
-    # ✅ FIXED: UUID FK (ONE-TO-ONE)
     chat_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("chats.id", ondelete="CASCADE"),
         unique=True,
-        nullable=False,
+        nullable=True,
         index=True
     )
 

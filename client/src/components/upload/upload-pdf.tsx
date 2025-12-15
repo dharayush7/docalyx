@@ -8,15 +8,23 @@ import { Button } from "../ui/button";
 import pdf from "@/assets/pdf.svg";
 import Image from "next/image";
 import { useUploadDocumentMutation } from "./mutation";
+import useSocket from "@/hooks/use-socket";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const allowedDocumentMimeTypes = ["application/pdf"];
 
-export default function UploadPDF() {
+export default function UploadPDF({
+  setIsUpladed,
+}: {
+  setIsUpladed: (isUpladed: boolean) => void;
+}) {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [isDraging, setDraging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const mutation = useUploadDocumentMutation();
+  const socket = useSocket();
+  const { user } = useKindeBrowserClient();
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -94,9 +102,16 @@ export default function UploadPDF() {
                 },
                 body: file,
               });
+
               if (!res.ok) {
                 throw new Error("Failed to upload file");
               }
+
+              socket?.emit("read_pdf", {
+                pdf_key: `${data.data.documentId}.pdf`,
+                user_id: user?.id,
+              });
+              setIsUpladed(true);
             } catch (error) {
               setFile(null);
               toast.error("Failed to upload file");
