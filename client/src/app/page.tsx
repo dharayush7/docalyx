@@ -1,13 +1,5 @@
-import {
-  RegisterLink,
-  LoginLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
-import Main from "./Main";
+import { ComponentExample } from "@/components/component-example";
 
-export default function Home() {
-  // return <AIChat />;
-  return <Main />;
-}
-{
-  /* <LoginLink postLoginRedirectURL="/auth/callback">Sign in</LoginLink>; */
+export default function Page() {
+  return <ComponentExample />;
 }
