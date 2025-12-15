@@ -1,14 +1,15 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { CLIENT_DATABASE_SSL_CA, CLIENT_DATABASE_URL } from "./constants";
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient;
 };
 
 const adapter = new PrismaPg({
-  connectionString: process.env.CLIENT_DATABASE_URL,
+  connectionString: CLIENT_DATABASE_URL,
   ssl: {
-    ca: process.env.CLIENT_DATABASE_SSL_CA,
+    ca: CLIENT_DATABASE_SSL_CA,
     rejectUnauthorized: true,
   },
 });

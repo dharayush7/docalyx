@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "@/provider/auth-provider";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import ReactQueryProvider from "@/provider/react-query-provider";
 const nunitoSans = Nunito_Sans({ variable: "--font-sans" });
 
 const geistSans = Geist({
@@ -33,8 +34,10 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <AuthProvider>
-            {children}
-            <Toaster />
+            <ReactQueryProvider>
+              {children}
+              <Toaster />
+            </ReactQueryProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

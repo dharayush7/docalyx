@@ -1,11 +1,13 @@
+"use client";
 import { cn, isFileSizeGreaterThan } from "@/lib/utils";
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Card, CardContent } from "../ui/card";
-import { FileIcon, Loader2, Upload } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { Button } from "../ui/button";
 import pdf from "@/assets/pdf.svg";
 import Image from "next/image";
+import { useUploadDocumentMutation } from "./mutation";
 
 const allowedDocumentMimeTypes = ["application/pdf"];
 
@@ -13,7 +15,8 @@ export default function UploadPDF() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [isDraging, setDraging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [isUploading, startUploading] = useTransition();
+  const [isUploading, setIsUploading] = useState(false);
+  const mutation = useUploadDocumentMutation();
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -74,22 +77,38 @@ export default function UploadPDF() {
   };
 
   const onUpload = (file: File) => {
-    // startUploading(async () => {
-    //   try {
-    //     if (!file) {
-    //       toast.error("File is not selected");
-    //       return;
-    //     }
-    //     const id = await uploadDocumentHandler(file);
-    //     toast.success("Document uploaded");
-    //     setDocumentId(id);
-    //     setErr(null);
-    //   } catch (error) {
-    //     if (error instanceof Error) {
-    //       setErr(error.message);
-    //     } else setErr("Unexpected error occured");
-    //   }
-    // });
+    mutation.mutate(
+      { title: file.name },
+      {
+        onError: () => {
+          setFile(null);
+        },
+        onSuccess: async (data) => {
+          if (data.success && data.data) {
+            setIsUploading(true);
+            try {
+              const res = await fetch(data.data.preSignedUrl, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": file.type,
+                },
+                body: file,
+              });
+              if (!res.ok) {
+                throw new Error("Failed to upload file");
+              }
+            } catch (error) {
+              setFile(null);
+              toast.error("Failed to upload file");
+            } finally {
+              setIsUploading(false);
+            }
+          } else {
+            setFile(null);
+          }
+        },
+      }
+    );
   };
   return (
     <Card
@@ -115,9 +134,11 @@ export default function UploadPDF() {
                 alt="pdf"
                 width={40}
                 height={40}
-                className={cn(isUploading && "opacity-50")}
+                className={cn(
+                  (isUploading || mutation.isPending) && "opacity-50"
+                )}
               />
-              {isUploading && (
+              {(isUploading || mutation.isPending) && (
                 <Loader2
                   size={30}
                   className="animate-spin absolute text-primary top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"

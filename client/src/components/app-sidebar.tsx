@@ -156,7 +156,7 @@ function AccountDropdown() {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
         <SidebarMenuButton className="cursor-pointer">
           <Image
             src={user?.picture || ""}
