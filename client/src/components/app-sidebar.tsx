@@ -70,7 +70,7 @@ export default function AppSidebar() {
             <Button variant="ghost" size="icon-sm">
               <User2 />
             </Button>
-            <SidebarTrigger />
+            <SidebarTrigger className="cursor-w-resize" />
           </div>
         )}
         {!open && (
@@ -81,6 +81,7 @@ export default function AppSidebar() {
                   className={buttonVariants({
                     variant: "ghost",
                     size: "icon-sm",
+                    className: "cursor-e-resize",
                   })}
                 >
                   <PanelLeftIcon />
@@ -110,6 +111,7 @@ export default function AppSidebar() {
                     router.push("/");
                   }}
                   className={cn(
+                    "cursor-pointer",
                     pathname === "/" && "bg-primary text-primary-foreground"
                   )}
                 >
@@ -155,7 +157,7 @@ function AccountDropdown() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuButton>
+        <SidebarMenuButton className="cursor-pointer">
           <Image
             src={user?.picture || ""}
             alt={user?.given_name || ""}
@@ -186,16 +188,16 @@ function AccountDropdown() {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <Info />
             <span>About</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <User2 />
             <span>My Profile</span>
           </DropdownMenuItem>
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger className="cursor-pointer">
               <SunMoon /> Theme
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -203,18 +205,21 @@ function AccountDropdown() {
                 <DropdownMenuCheckboxItem
                   checked={theme === "light"}
                   onClick={() => setTheme("light")}
+                  className="cursor-pointer"
                 >
                   <Sun /> Light
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
                   checked={theme === "dark"}
                   onClick={() => setTheme("dark")}
+                  className="cursor-pointer"
                 >
                   <Moon /> Dark
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
                   checked={theme === "system"}
                   onClick={() => setTheme("system")}
+                  className="cursor-pointer"
                 >
                   <Monitor /> System
                 </DropdownMenuCheckboxItem>

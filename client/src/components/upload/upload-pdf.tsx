@@ -140,7 +140,11 @@ export default function UploadPDF() {
               ref={fileRef}
               onChange={onChange}
             />
-            <Button onClick={onClick} type="button" className="w-fit">
+            <Button
+              onClick={onClick}
+              type="button"
+              className="w-fit cursor-pointer"
+            >
               <Upload />
             </Button>
             <p className="text-sm font-medium mt-3">
