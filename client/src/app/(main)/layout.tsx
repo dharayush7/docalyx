@@ -1,4 +1,5 @@
 import AppSidebar from "@/components/app-sidebar";
+import Navbar from "@/components/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function MainLayout({
@@ -9,7 +10,10 @@ export default function MainLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      {children}
+      <main className="w-full h-full">
+        <Navbar />
+        {children}
+      </main>
     </SidebarProvider>
   );
 }

@@ -97,7 +97,7 @@ export default function UploadPDF() {
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       className={cn(
-        "ring-0 border border-border w-100",
+        "ring-0 border border-border md:w-100 sm:w-full",
         isDraging && "border-primary border-dashed border-2"
       )}
     >

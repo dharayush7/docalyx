@@ -26,7 +26,7 @@ import { useSidebar } from "./ui/sidebar";
 import { useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import Image from "next/image";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
@@ -49,6 +49,7 @@ export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
   const [hover, setHover] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Sidebar
@@ -108,6 +109,9 @@ export default function AppSidebar() {
                     e.preventDefault();
                     router.push("/");
                   }}
+                  className={cn(
+                    pathname === "/" && "bg-primary text-primary-foreground"
+                  )}
                 >
                   <Edit />
                   <span>New chat</span>
@@ -149,7 +153,7 @@ function AccountDropdown() {
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <SidebarMenuButton>
           <Image
@@ -195,7 +199,7 @@ function AccountDropdown() {
               <SunMoon /> Theme
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-50">
+              <DropdownMenuSubContent className="w-50 absolute -left-44 -top-20 md:static">
                 <DropdownMenuCheckboxItem
                   checked={theme === "light"}
                   onClick={() => setTheme("light")}
