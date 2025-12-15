@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/provider/auth-provider";
 import { ThemeProvider } from "@/provider/theme-provider";
-
-const nunitoSans = Nunito_Sans({variable:'--font-sans'});
+import { Toaster } from "@/components/ui/sonner";
+const nunitoSans = Nunito_Sans({ variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

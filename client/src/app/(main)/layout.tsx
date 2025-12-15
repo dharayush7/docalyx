@@ -8,8 +8,8 @@ export default function MainLayout({
 }) {
   return (
     <SidebarProvider>
-      {children}
       <AppSidebar />
+      {children}
     </SidebarProvider>
   );
 }
