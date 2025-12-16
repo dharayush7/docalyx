@@ -113,14 +113,12 @@ export default function UploadPDF({
               });
               setIsUpladed(true);
             } catch (error) {
-              setFile(null);
               toast.error("Failed to upload file");
             } finally {
               setIsUploading(false);
             }
-          } else {
-            setFile(null);
           }
+          setFile(null);
         },
       }
     );

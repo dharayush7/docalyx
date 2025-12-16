@@ -3,6 +3,7 @@ import socketio
 from fastapi import FastAPI
 from app.socket.server import sio
 import app.socket.event
+from app.service import gemini_services
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 IS_DEVELOPMENT = ENVIRONMENT == "development"
@@ -10,7 +11,6 @@ IS_DEVELOPMENT = ENVIRONMENT == "development"
 
 app = FastAPI()
 socket_app = socketio.ASGIApp(sio, app)
-
 
 app = socket_app
 

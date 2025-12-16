@@ -7,11 +7,13 @@ import { PdfReadResponse } from "@/lib/types";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useTheme } from "next-themes";
 import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 export default function Main() {
   const [isUpladed, setIsUpladed] = useState(false);
   const socket = useSocket();
   const { resolvedTheme } = useTheme();
+  const router = useRouter();
 
   const lottie =
     resolvedTheme === "dark"
@@ -21,7 +23,11 @@ export default function Main() {
   useEffect(() => {
     if (isUpladed && socket) {
       socket.on("pdf_read_response", (data: PdfReadResponse) => {
-        console.log(data);
+        if (data.status === "success") {
+          router.push(`/chat/${data.chat_id}`);
+        } else {
+          setIsUpladed(false);
+        }
       });
     }
   }, [isUpladed, socket]);

@@ -1,8 +1,8 @@
 import uuid
-from .base import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, String, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
+from app.models.base import Base
 
 
 class Chat(Base):
@@ -31,10 +31,16 @@ class Chat(Base):
         back_populates="chats"
     )
 
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("documents.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True
+    )
+
     document: Mapped["Document"] = relationship(
         back_populates="chat",
         uselist=False,
-        cascade="all, delete-orphan"
     )
 
     messages: Mapped[list["Message"]] = relationship(

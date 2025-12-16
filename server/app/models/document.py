@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import String, DateTime, Boolean, ForeignKey, func, Index
+from sqlalchemy import String, DateTime, Boolean, func, Index
 from sqlalchemy.dialects.postgresql import UUID
 from app.models.base import Base
 
@@ -19,16 +19,10 @@ class Document(Base):
         nullable=False
     )
 
-    chat_id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True),
-        ForeignKey("chats.id", ondelete="CASCADE"),
-        unique=True,
-        nullable=True,
-        index=True
-    )
-
-    chat: Mapped["Chat"] = relationship(
-        back_populates="document"
+    chat: Mapped["Chat | None"] = relationship(
+        back_populates="document",
+        uselist=False,
+        cascade="all"
     )
 
     is_vectorized: Mapped[bool] = mapped_column(
@@ -49,5 +43,5 @@ class Document(Base):
     )
 
     __table_args__ = (
-        Index("ix_documents_chat_vectorized", "chat_id", "is_vectorized"),
+        Index("ix_documents_vectorized", "is_vectorized"),
     )
