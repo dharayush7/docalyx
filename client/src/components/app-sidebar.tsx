@@ -57,11 +57,6 @@ export default function AppSidebar() {
       variant="sidebar"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => {
-        if (!open) {
-          toggleSidebar();
-        }
-      }}
       className={cn(!open && "cursor-e-resize")}
     >
       <SidebarHeader>
@@ -83,6 +78,9 @@ export default function AppSidebar() {
                     size: "icon-sm",
                     className: "cursor-e-resize",
                   })}
+                  onClick={(e) => {
+                    toggleSidebar();
+                  }}
                 >
                   <PanelLeftIcon />
                 </TooltipTrigger>
@@ -98,7 +96,13 @@ export default function AppSidebar() {
           </>
         )}
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent
+        onClick={() => {
+          if (!open) {
+            toggleSidebar();
+          }
+        }}
+      >
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
