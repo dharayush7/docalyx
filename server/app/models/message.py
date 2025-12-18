@@ -6,7 +6,6 @@ from sqlalchemy import (
     DateTime,
     Boolean,
     func,
-    Enum,
     Index,
 )
 from sqlalchemy.dialects.postgresql import UUID
@@ -30,7 +29,7 @@ class Message(Base):
     )
 
     role: Mapped[str] = mapped_column(
-        Enum("user", "assistant", "system", name="message_role"),
+        Text,
         nullable=False
     )
 

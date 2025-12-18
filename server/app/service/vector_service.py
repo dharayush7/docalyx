@@ -11,3 +11,12 @@ def create_vector_store(docs: list[Document], name: str):
         url=constant.VECTOR_STORE_URL,
         collection_name=name
     )
+
+
+def search_vector_store(query: str, name: str):
+    vector_store = QdrantVectorStore.from_existing_collection(
+        collection_name=name,
+        embedding=embedding_model,
+        url=constant.VECTOR_STORE_URL
+    )
+    return vector_store.similarity_search(query)

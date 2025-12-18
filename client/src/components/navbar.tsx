@@ -14,7 +14,16 @@ export default function Navbar() {
   const { title } = useNavbar();
 
   return (
-    <nav className="w-full bg-card h-14 px-5 flex justify-between md:justify-start items-center relative">
+    <nav
+      className={cn(
+        " bg-card h-14 px-5 flex justify-between md:justify-start items-center fixed transition-all duration-200 ease-linear",
+        mobile
+          ? "w-full"
+          : open
+          ? "w-[calc(100%-var(--sidebar-width))]"
+          : "w-[calc(100%-var(--sidebar-width-icon))]"
+      )}
+    >
       <div className="flex items-center h-full gap-4">
         {mobile && (
           <Button variant="ghost" size="icon-sm" onClick={toggleSidebar}>
