@@ -1,5 +1,5 @@
 "use client";
-import { chats } from "@/generated/prisma/client";
+import { chats, documents } from "@/generated/prisma/client";
 import useNavbar from "@/hooks/use-navbar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ChatInput from "./chat-input";
@@ -16,8 +16,13 @@ import { ApiMessageResponse, SocketMessageResponse } from "@/lib/types";
 import useSocket from "@/hooks/use-socket";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import DocumentCard from "@/components/document-card";
 
-export default function Main({ chat }: { chat: chats }) {
+export default function Main({
+  chat,
+}: {
+  chat: chats & { documents: documents };
+}) {
   const { setTitle } = useNavbar();
   const ref = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -149,6 +154,7 @@ export default function Main({ chat }: { chat: chats }) {
             </p>
           </div>
         )}
+        {!hasNextPage && <DocumentCard document={chat.documents} />}
         <ChatList
           data={data}
           inView={inView}

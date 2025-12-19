@@ -2,8 +2,6 @@ import { messages } from "@/generated/prisma/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "highlight.js/styles/github.css";
 import CodeBlock from "./code-block";
 import {
@@ -15,7 +13,6 @@ import {
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import Markdown from "react-markdown";
 
 export default function AiChatCard({ message }: { message: messages }) {
   const [copied, setCopied] = useState(false);

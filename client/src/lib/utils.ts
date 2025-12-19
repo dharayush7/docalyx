@@ -52,46 +52,8 @@ export function formatDateTime(input: string | Date | number): string {
 export function fixMarkdown(input: string): string {
   let text = input.trim();
 
-  // 1️⃣ Remove ```markdown wrapper ONLY
   text = text.replace(/^```markdown\s*/i, "");
   text = text.replace(/```$/, "");
-
-  // 2️⃣ Extract code blocks safely
-  // const codeBlocks: CodeBlock[] = [];
-  // text = text.replace(/```[\s\S]*?```/g, (match) => {
-  //   const key = `__CODE_BLOCK_${codeBlocks.length}__`;
-  //   codeBlocks.push({ key, value: match });
-  //   return key;
-  // });
-
-  // ===============================
-  // FIX ONLY NON-CODE MARKDOWN
-  // ===============================
-
-  // Headings spacing
-  // text = text.replace(/(#{1,6})([^#\s])/g, "$1 $2");
-  // text = text.replace(/(#{1,6} .+)(?!\n)/g, "$1\n\n");
-
-  // Horizontal rules
-  // text = text.replace(/---/g, "\n\n\n\n");
-
-  // Lists
-  // text = text.replace(/([^\n])\n?(- |\* )/g, "$1\n\n$2");
-  // text = text.replace(/([^\n])\n?(\d+\. )/g, "$1\n\n$2");
-
-  // Tables
-  // text = text.replace(/\|\s*---/g, "\n| ---");
-
-  // Collapse excessive newlines
-  // text = text.replace(/\n{3,}/g, "\n\n");
-
-  // ===============================
-  // RESTORE CODE BLOCKS (UNTOUCHED)
-  // ===============================
-
-  // for (const block of codeBlocks) {
-  //   text = text.replace(block.key, block.value);
-  // }
 
   return text.trim();
 }

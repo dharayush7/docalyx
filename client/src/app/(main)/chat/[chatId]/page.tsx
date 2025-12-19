@@ -19,6 +19,9 @@ export default async function Page({ params }: PageProps<"/chat/[chatId]">) {
         kinde_user_id: user.id,
       },
     },
+    include: {
+      documents: true,
+    },
   });
 
   if (!chat) {
