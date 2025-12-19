@@ -64,7 +64,7 @@ export default function ChatInput({
         placeholder="Ask anything..."
       />
       <Button
-        className="z-30 rounded-full p-4 py-6 absolute left-[calc(100%-4rem)] bottom-10 md:bottom-9.5 md:left-[calc(50%+325px)]"
+        className="z-30 rounded-full p-4 py-6 absolute left-[calc(100%-4rem)] bottom-10 md:bottom-9.5 md:left-[calc(50%+325px)] cursor-pointer"
         disabled={mutation.isPending || message.trim() === "" || isThinking}
         onClick={(e) => {
           e.preventDefault();

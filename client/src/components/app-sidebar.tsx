@@ -182,7 +182,7 @@ export default function AppSidebar() {
                           e.preventDefault();
                           router.push(`/chat/${chat.id}`);
                         }}
-                        className=""
+                        className="cursor-pointer"
                       >
                         <p className="truncate">{chat.name}</p>
                       </SidebarMenuButton>
@@ -304,6 +304,7 @@ function SearchDialog({ chats }: { chats: chats[] }) {
       <SidebarMenuItem>
         <SidebarMenuButton
           tooltip="Search chats"
+          className="cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -321,30 +322,32 @@ function SearchDialog({ chats }: { chats: chats[] }) {
         <DialogHeader className="p-0! m-0! hidden">
           <DialogTitle className="p-0! m-0! hidden"></DialogTitle>
         </DialogHeader>
-        <div>
-          <div className="relative">
+        <div className="w-full">
+          <div className="pr-2 sm:pr-0">
             <Input
               placeholder="Search chats..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="py-8 rounded-t-3xl ring-0 focus-visible:ring-0 border-0 rounded-b-none bg-card! px-6 border-b border-zinc-700 focus-visible:border-0 focus-visible:border-b focus-visible:border-zinc-700"
+              className="w-full py-8 rounded-t-3xl ring-0 focus-visible:ring-0 border-0 rounded-b-none bg-card! px-6 border-b dark:border-zinc-700 focus-visible:border-0 focus-visible:border-b dark:focus-visible:border-zinc-700 focus-visible:border-gray-300 border-gray-300"
             />
             <DialogClose className="absolute top-5 right-5 cursor-pointer">
               <XIcon size={20} className="text-muted-foreground" />
             </DialogClose>
           </div>
-          <div className="px-3 space-y-2 mt-4">
+          <div className="px-3 space-y-2 mt-4 w-full">
             {filteredChats.map((chat) => (
-              <DialogClose
+              <div
                 key={chat.id}
-                className="hover:bg-muted py-3 px-4 rounded-lg flex items-center gap-4 cursor-pointer w-full"
+                className="hover:bg-muted py-3 px-2 md:px-4 rounded-lg flex items-center cursor-pointer w-full"
                 onClick={() => {
                   router.push(`/chat/${chat.id}`);
                 }}
               >
-                <MessageCircle size={20} />
-                <p>{chat.name}</p>
-              </DialogClose>
+                <p className="text-ellipsis truncate w-full flex items-center gap-2">
+                  <MessageCircle size={20} />
+                  <span>{chat.name}</span>
+                </p>
+              </div>
             ))}
           </div>
         </div>

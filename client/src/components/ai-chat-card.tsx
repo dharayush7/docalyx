@@ -102,9 +102,10 @@ export default function AiChatCard({ message }: { message: messages }) {
       </div>
       <div className="flex justify-between px-2 text-xs font-medium text-muted-foreground">
         <button
+          title="copy"
           onClick={handleCopy}
           className={cn(
-            "opacity-0 group-hover/chat:opacity-100 transition text-secondary-foreground rounded flex items-center justify-center",
+            "opacity-0 group-hover/chat:opacity-100 transition text-secondary-foreground rounded flex items-center justify-center cursor-pointer",
             isMobile && "opacity-100"
           )}
         >
