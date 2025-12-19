@@ -15,6 +15,7 @@ import {
 import {
   Edit,
   Info,
+  Loader2,
   Monitor,
   Moon,
   PanelLeftIcon,
@@ -44,12 +45,23 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { useQuery } from "@tanstack/react-query";
+import kyInstance from "@/lib/ky";
+import { chats } from "@/generated/prisma/client";
 
 export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
   const [hover, setHover] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const {
+    data: chats,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryFn: () => kyInstance.get("/api/chat").json<chats[]>(),
+    queryKey: ["chats"],
+  });
 
   return (
     <Sidebar
@@ -129,11 +141,39 @@ export default function AppSidebar() {
         {open && (
           <SidebarGroup>
             <SidebarGroupLabel>Recent chats</SidebarGroupLabel>
-            <SidebarGroupContent>
+            {isLoading && (
+              <div className="flex flex-col justify-center items-center gap-1">
+                <Loader2 size={16} className="animate-spin text-primary" />
+                <p className="text-sm text-muted-foreground font-medium">
+                  Loading chats...
+                </p>
+              </div>
+            )}
+            {(!chats || isError) && (
+              <div>
+                <p className="w-full font-medium text-sm text-center text-destructive mt-2">
+                  Error loading chats
+                </p>
+              </div>
+            )}
+            {chats?.length === 0 && <p>No chats</p>}
+            <SidebarGroupContent className="overflow-y-scroll h-full">
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton>chat1</SidebarMenuButton>
-                </SidebarMenuItem>
+                {chats &&
+                  chats.map((chat, i) => (
+                    <SidebarMenuItem key={i}>
+                      <SidebarMenuButton
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          router.push(`/chat/${chat.id}`);
+                        }}
+                        className=""
+                      >
+                        <p className="truncate">{chat.name}</p>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

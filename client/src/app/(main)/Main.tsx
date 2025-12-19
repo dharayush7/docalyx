@@ -8,12 +8,16 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useTheme } from "next-themes";
 import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import useNavbar from "@/hooks/use-navbar";
 
 export default function Main() {
   const [isUpladed, setIsUpladed] = useState(false);
   const socket = useSocket();
   const { resolvedTheme } = useTheme();
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const { setTitle } = useNavbar();
 
   const lottie =
     resolvedTheme === "dark"
@@ -21,9 +25,14 @@ export default function Main() {
       : "./lottie/sparkles-loop-loader-light.lottie";
 
   useEffect(() => {
+    setTitle("New chat");
     if (isUpladed && socket) {
       socket.on("pdf_read_response", (data: PdfReadResponse) => {
         if (data.status === "success") {
+          queryClient.invalidateQueries({
+            queryKey: ["chats"],
+          });
+
           router.push(`/chat/${data.chat_id}`);
         } else {
           setIsUpladed(false);
