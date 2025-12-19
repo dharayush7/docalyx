@@ -7,7 +7,15 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
-export default function ChatInput({ chatId }: { chatId: string }) {
+export default function ChatInput({
+  chatId,
+  isThinking,
+  setIsThinking,
+}: {
+  chatId: string;
+  isThinking: boolean;
+  setIsThinking: (val: boolean) => void;
+}) {
   const [message, setMessage] = useState("");
   const { open } = useSidebar();
   const mobile = useIsMobile();
@@ -23,7 +31,16 @@ export default function ChatInput({ chatId }: { chatId: string }) {
 
   const handleSubmit = () => {
     if (message.trim() === "") return;
-    mutation.mutate({ chatId: chatId, message: message.trim() });
+    if (isThinking) return;
+    mutation.mutate(
+      { chatId: chatId, message: message.trim() },
+      {
+        onSuccess: () => {
+          setIsThinking(true);
+          setMessage("");
+        },
+      }
+    );
   };
 
   return (
@@ -48,7 +65,7 @@ export default function ChatInput({ chatId }: { chatId: string }) {
       />
       <Button
         className="z-30 rounded-full p-4 py-6 absolute left-[calc(100%-4rem)] bottom-10 md:bottom-9.5 md:left-[calc(50%+325px)]"
-        disabled={mutation.isPending}
+        disabled={mutation.isPending || message.trim() === "" || isThinking}
         onClick={(e) => {
           e.preventDefault();
           handleSubmit();

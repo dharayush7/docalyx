@@ -10,3 +10,8 @@ export interface ApiMessageResponse {
   messages: messages[];
   nextCursor: string | null;
 }
+
+export interface SocketMessageResponse {
+  status: "success" | "failed";
+  data: messages;
+}

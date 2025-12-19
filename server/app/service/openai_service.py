@@ -19,7 +19,7 @@ def generate_response(messages):
     - Alaway give points in answer
     
     Output instaction: 
-    You are a highly skilled technical writer. Format all your responses using clear and well-structured Markdown, including code blocks with language tags.
+    You are a highly skilled technical writer. Format all your responses using clear and well-structured Markdown, including code blocks with language tags. Also make sure that you have to output just markdown and no other text. Do not do complexicity in markdown. It should be simple and easy to understand.
 
     """
 
@@ -28,7 +28,7 @@ def generate_response(messages):
         {"role": "system", "content": SYSTEM_PROMPT}] + messages
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4.1",
         messages=messages_with_system
     )
     return response.choices[0].message.content

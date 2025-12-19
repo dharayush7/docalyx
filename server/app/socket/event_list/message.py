@@ -108,13 +108,28 @@ async def message(sid, data):
                 openai_messages
             )
 
-            new_msg = Message(
+            ast_msg = Message(
                 content=response, role="assistant", chat_id=chat.id)
 
-            db.add(new_msg)
+            db.add(ast_msg)
             await db.commit()
+            db.refresh(ast_msg)
 
-            print(f"Response: {response}")
+            # print(f"Response: {response}")
+
+            await sio.emit(
+                "message_response",
+                {"status": "success", "data": {
+                    "id": str(ast_msg.id),
+                    "chat_id": str(ast_msg.chat_id),
+                    "role": ast_msg.role,
+                    "content": ast_msg.content,
+                    "is_summary": ast_msg.is_summary,
+                    "created_at": ast_msg.created_at.isoformat(),
+                    "updated_at": ast_msg.updated_at.isoformat()
+                }},
+                to=sid
+            )
 
         except Exception as e:
             await sio.emit(
