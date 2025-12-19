@@ -16,12 +16,15 @@ import {
   Edit,
   Info,
   Loader2,
+  MessageCircle,
   Monitor,
   Moon,
   PanelLeftIcon,
+  Search,
   Sun,
   SunMoon,
   User2,
+  XIcon,
 } from "lucide-react";
 import { useSidebar } from "./ui/sidebar";
 import { useState } from "react";
@@ -48,6 +51,16 @@ import { useTheme } from "next-themes";
 import { useQuery } from "@tanstack/react-query";
 import kyInstance from "@/lib/ky";
 import { chats } from "@/generated/prisma/client";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
 
 export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
@@ -135,6 +148,7 @@ export default function AppSidebar() {
                   <span>New chat</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              <SearchDialog chats={chats || []} />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -273,5 +287,68 @@ function AccountDropdown() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function SearchDialog({ chats }: { chats: chats[] }) {
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+
+  const filteredChats = chats.filter((chat) => {
+    return chat.name.toLowerCase().includes(query.toLowerCase());
+  });
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <SidebarMenuItem>
+        <SidebarMenuButton
+          tooltip="Search chats"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            setOpen(true);
+          }}
+        >
+          <Search />
+          <span>Search chats</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+      <DialogContent
+        showCloseButton={false}
+        className="md:max-w-2xl bg-card p-0! rounded-3xl md:min-h-60"
+      >
+        <DialogHeader className="p-0! m-0! hidden">
+          <DialogTitle className="p-0! m-0! hidden"></DialogTitle>
+        </DialogHeader>
+        <div>
+          <div className="relative">
+            <Input
+              placeholder="Search chats..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="py-8 rounded-t-3xl ring-0 focus-visible:ring-0 border-0 rounded-b-none bg-card! px-6 border-b border-zinc-700 focus-visible:border-0 focus-visible:border-b focus-visible:border-zinc-700"
+            />
+            <DialogClose className="absolute top-5 right-5 cursor-pointer">
+              <XIcon size={20} className="text-muted-foreground" />
+            </DialogClose>
+          </div>
+          <div className="px-3 space-y-2 mt-4">
+            {filteredChats.map((chat) => (
+              <DialogClose
+                key={chat.id}
+                className="hover:bg-muted py-3 px-4 rounded-lg flex items-center gap-4 cursor-pointer w-full"
+                onClick={() => {
+                  router.push(`/chat/${chat.id}`);
+                }}
+              >
+                <MessageCircle size={20} />
+                <p>{chat.name}</p>
+              </DialogClose>
+            ))}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
