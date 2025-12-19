@@ -1,11 +1,10 @@
-import ChatCard from "@/components/ChatCard";
-import { messages } from "@/generated/prisma/client";
-import kyInstance from "@/lib/ky";
 import { cn } from "@/lib/utils";
 import { useInfiniteQuery, InfiniteData } from "@tanstack/react-query";
 import { useRef } from "react";
 import { InViewHookResponse } from "react-intersection-observer";
 import { ApiMessageResponse } from "@/lib/types";
+import AiChatCard from "@/components/ai-chat-card";
+import UserChatCard from "@/components/user-chat-card";
 
 interface ChatListProps {
   data: InfiniteData<ApiMessageResponse>;
@@ -14,7 +13,7 @@ interface ChatListProps {
 
 export default function ChatList({ data, inView }: ChatListProps) {
   return (
-    <main>
+    <main className="space-y-12">
       <div ref={inView.ref} />
       {data.pages.map((page) =>
         page.messages.map((message) => (
@@ -25,7 +24,11 @@ export default function ChatList({ data, inView }: ChatListProps) {
               message.role === "query" ? "justify-end" : "justify-start"
             )}
           >
-            <ChatCard message={message} isUser={message.role === "query"} />
+            {message.role === "query" ? (
+              <UserChatCard message={message} />
+            ) : (
+              <AiChatCard message={message} />
+            )}
           </div>
         ))
       )}

@@ -63,7 +63,7 @@ export default function Main({ chat }: { chat: chats }) {
 
   return (
     <div className="overflow-y-auto h-screen pt-20 pb-36" ref={ref}>
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-3xl px-4">
         <ChatList data={data} inView={inView} />
         <ChatInput chatId={chat.id} />
       </div>

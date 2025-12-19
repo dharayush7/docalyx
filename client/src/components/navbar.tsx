@@ -16,7 +16,7 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        " bg-card h-14 px-5 flex justify-between md:justify-start items-center fixed transition-all duration-200 ease-linear",
+        "z-50 bg-card h-14 px-5 flex justify-between md:justify-start items-center fixed transition-all duration-200 ease-linear",
         mobile
           ? "w-full"
           : open
