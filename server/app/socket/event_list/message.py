@@ -50,19 +50,19 @@ async def message(sid, data):
                 if msg.role == "query":
                     continue
                 elif msg.role == "summary":
-                    openai_messages.clear()
+                    openai_messages = []
                     openai_messages.append(
                         {"role": "user", "content": f"Summary of previous conversation:\n{msg.content}"})
                 else:
                     openai_messages.append(
                         {"role": msg.role, "content": msg.content})
 
-            if len(old_messages) == 19:
+            if len(openai_messages) > 19:
 
                 context = ""
 
-                for msg in old_messages:
-                    context += f"-{msg.role}: {msg.content}\n"
+                for msg in openai_messages:
+                    context += f"-{msg["role"]}: {msg["content"]}\n"
 
                 summary = await asyncio.to_thread(
                     gemini_services.get_summary,
