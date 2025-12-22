@@ -6,6 +6,8 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import useNavbar from "@/hooks/use-navbar";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import logo from "@/assets/docalyx.png";
 
 export default function Navbar() {
   const { toggleSidebar, open } = useSidebar();
@@ -30,9 +32,18 @@ export default function Navbar() {
             <PanelLeftIcon />
           </Button>
         )}
-        <div className="flex items-center gap-1">
-          <User2 className="w-4 h-4" />
-          {!mobile && <p className="text-lg font-semibold">PDFAI</p>}
+        <div
+          className="flex items-center gap-1 cursor-pointer"
+          onClick={() => router.push("/")}
+        >
+          <Image
+            src={logo}
+            alt="Docalyx"
+            width={40}
+            height={40}
+            className="w-8! h-8!"
+          />
+          {!mobile && <p className="text-lg font-semibold">Docalyx</p>}
         </div>
       </div>
       <div

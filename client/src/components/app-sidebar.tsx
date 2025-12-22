@@ -55,23 +55,18 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
+import logo from "@/assets/docalyx.png";
 
 export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
   const [hover, setHover] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
-  const {
-    data: chats,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: chats, isLoading } = useQuery({
     queryFn: () => kyInstance.get("/api/chat").json<chats[]>(),
     queryKey: ["chats"],
   });
@@ -87,10 +82,28 @@ export default function AppSidebar() {
       <SidebarHeader>
         {open && (
           <div className="w-full flex justify-between">
-            <Button variant="ghost" size="icon-sm">
-              <User2 />
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              onClick={() => router.push("/")}
+              className="cursor-pointer"
+            >
+              <Image
+                src={logo}
+                alt="Docalyx"
+                width={40}
+                height={40}
+                className="w-8! h-8!"
+              />
             </Button>
-            <SidebarTrigger className="cursor-w-resize" />
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              onClick={toggleSidebar}
+              className="cursor-w-resize"
+            >
+              <PanelLeftIcon className="w-5! h-5!" />
+            </Button>
           </div>
         )}
         {!open && (
@@ -100,22 +113,32 @@ export default function AppSidebar() {
                 <TooltipTrigger
                   className={buttonVariants({
                     variant: "ghost",
-                    size: "icon-sm",
+                    size: "icon-lg",
                     className: "cursor-e-resize",
                   })}
                   onClick={(e) => {
                     toggleSidebar();
                   }}
                 >
-                  <PanelLeftIcon />
+                  <PanelLeftIcon className="w-5! h-5!" />
                 </TooltipTrigger>
                 <TooltipContent side="right" align="center">
                   Sidebar open
                 </TooltipContent>
               </Tooltip>
             ) : (
-              <Button variant="ghost" size="icon-sm">
-                <User2 />
+              <Button
+                variant="ghost"
+                size="icon-lg"
+                onClick={() => router.push("/")}
+              >
+                <Image
+                  src={logo}
+                  alt="Docalyx"
+                  width={40}
+                  height={40}
+                  className="w-8! h-8!"
+                />
               </Button>
             )}
           </>
@@ -163,7 +186,7 @@ export default function AppSidebar() {
                 </p>
               </div>
             )}
-            {(!chats || isError) && (
+            {!isLoading && !chats && (
               <div>
                 <p className="w-full font-medium text-sm text-center text-destructive mt-2">
                   Error loading chats
@@ -182,7 +205,11 @@ export default function AppSidebar() {
                           e.preventDefault();
                           router.push(`/chat/${chat.id}`);
                         }}
-                        className="cursor-pointer"
+                        className={cn(
+                          "cursor-pointer",
+                          pathname === `/chat/${chat.id}` &&
+                            "bg-primary text-primary-foreground"
+                        )}
                       >
                         <p className="truncate">{chat.name}</p>
                       </SidebarMenuButton>
