@@ -4,10 +4,21 @@ import { Button } from "@/components/ui/button";
 import { users } from "@/generated/prisma/client";
 import useNavbar from "@/hooks/use-navbar";
 import { cn } from "@/lib/utils";
-import { Loader2, Mail, User } from "lucide-react";
+import { Loader2, LogOut, Mail, User } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useUpdateUserMutation } from "./mutation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
 
 export default function Main({ dbUser }: { dbUser: users }) {
   const { setTitle } = useNavbar();
@@ -63,6 +74,7 @@ export default function Main({ dbUser }: { dbUser: users }) {
                 />
               </div>
             </div>
+            <LogoutDialog />
           </div>
 
           {/* Content */}
@@ -158,5 +170,48 @@ export default function Main({ dbUser }: { dbUser: users }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function LogoutDialog() {
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  return (
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <Button
+        variant="ghost"
+        size="icon-lg"
+        className="absolute right-4 top-4 cursor-pointer"
+        onClick={() => setIsOpen(true)}
+      >
+        <LogOut className="h-5! w-5! text-destructive" />
+      </Button>
+      <AlertDialogContent className="sm:max-w-106.25 gap-6 p-6">
+        <AlertDialogHeader className="gap-3">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
+            <LogOut className="h-6 w-6 text-destructive" />
+          </div>
+          <AlertDialogTitle className="text-center text-xl">
+            Confirm Logout
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-center text-base">
+            Are you sure you want to logout? You'll need to sign in again to
+            access your account.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="flex-row gap-3 sm:gap-3">
+          <Button
+            variant="destructive"
+            className="flex-1"
+            onClick={() => router.push("/api/auth/logout")}
+          >
+            Logout
+          </Button>
+          <Button className="flex-1" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
