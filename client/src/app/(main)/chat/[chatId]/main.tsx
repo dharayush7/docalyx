@@ -1,7 +1,7 @@
 "use client";
 import { chats, documents } from "@/generated/prisma/client";
 import useNavbar from "@/hooks/use-navbar";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ChatInput from "./chat-input";
 import ChatList from "./chat-list";
 import { useInView } from "react-intersection-observer";
@@ -15,8 +15,12 @@ import kyInstance from "@/lib/ky";
 import { ApiMessageResponse, SocketMessageResponse } from "@/lib/types";
 import useSocket from "@/hooks/use-socket";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { ArrowDown, Loader2 } from "lucide-react";
 import DocumentCard from "@/components/document-card";
+import { useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 export default function Main({
   chat,
@@ -30,6 +34,9 @@ export default function Main({
   const [isError, setIsError] = useState(false);
   const socket = useSocket();
   const queryClient = useQueryClient();
+  const [currentScrollHeight, setCurrentScrollHeight] = useState(0);
+  const { open } = useSidebar();
+  const mobile = useIsMobile();
 
   const {
     data,
@@ -131,6 +138,26 @@ export default function Main({
     }
   }, [ref]);
 
+  useEffect(() => {
+    if (ref.current) {
+      const handleScroll = (e: Event) => {
+        const target = e.target as HTMLDivElement;
+        if (ref.current) {
+          const visibleHeight = ref.current.clientHeight;
+          const scrolledDistance =
+            ref.current.scrollHeight - target.scrollTop - visibleHeight;
+          setCurrentScrollHeight(scrolledDistance);
+        }
+      };
+
+      ref.current.addEventListener("scroll", handleScroll);
+
+      return () => {
+        ref.current?.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [ref.current, data]);
+
   if (isLoading)
     return (
       <div className="pt-[30%] w-full flex flex-col items-center justify-center">
@@ -161,6 +188,27 @@ export default function Main({
           isThinking={isThinking}
           isError={isError}
         />
+        {currentScrollHeight > 40 && (
+          <div
+            className={cn(
+              "fixed bottom-30 transform flex items-center justify-center",
+              mobile
+                ? "w-full left-0"
+                : open
+                ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
+                : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)"
+            )}
+          >
+            <Button
+              variant="secondary"
+              size="icon"
+              className="rounded-full cursor-pointer border border-gray-300 dark:border-zinc-600 hover:bg-secondary!"
+              onClick={scrollToBottom}
+            >
+              <ArrowDown />
+            </Button>
+          </div>
+        )}
         <ChatInput
           chatId={chat.id}
           isThinking={isThinking}
