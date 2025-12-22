@@ -26,9 +26,9 @@ import {
   XIcon,
 } from "lucide-react";
 import { useSidebar } from "./ui/sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { cn, isMac } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import Image from "next/image";
@@ -60,6 +60,7 @@ import {
 import { Input } from "./ui/input";
 import logo from "@/assets/docalyx.png";
 import useAuth from "@/hooks/use-auth";
+import { Kbd, KbdGroup } from "./ui/kbd";
 
 export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
@@ -324,6 +325,19 @@ function SearchDialog({ chats }: { chats: chats[] }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      // Cmd + K (Mac) OR Ctrl + K (Windows/Linux)
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setOpen(!open);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open, setOpen]);
+
   const filteredChats = chats.filter((chat) => {
     return chat.name.toLowerCase().includes(query.toLowerCase());
   });
@@ -341,25 +355,40 @@ function SearchDialog({ chats }: { chats: chats[] }) {
           }}
         >
           <Search />
-          <span>Search chats</span>
+          <span className="flex justify-between w-full">
+            Search chats
+            <KbdGroup className="">
+              {isMac() ? (
+                <>
+                  <Kbd>⌘K</Kbd>
+                </>
+              ) : (
+                <>
+                  <Kbd>Ctrl</Kbd>
+                  <span>+</span>
+                  <Kbd>K</Kbd>
+                </>
+              )}
+            </KbdGroup>
+          </span>
         </SidebarMenuButton>
       </SidebarMenuItem>
       <DialogContent
         showCloseButton={false}
-        className="md:max-w-2xl bg-card p-0! rounded-3xl md:min-h-60"
+        className="md:max-w-2xl bg-card p-0! rounded-3xl md:min-h-60 m-0!"
       >
         <DialogHeader className="p-0! m-0! hidden">
           <DialogTitle className="p-0! m-0! hidden"></DialogTitle>
         </DialogHeader>
         <div className="w-full">
-          <div className="pr-2 sm:pr-0">
+          <div className="relative">
             <Input
               placeholder="Search chats..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full py-8 rounded-t-3xl ring-0 focus-visible:ring-0 border-0 rounded-b-none bg-card! px-6 border-b dark:border-zinc-700 focus-visible:border-0 focus-visible:border-b dark:focus-visible:border-zinc-700 focus-visible:border-gray-300 border-gray-300"
+              className="w-[90%] md:w-full py-8 rounded-t-3xl ring-0 focus-visible:ring-0 border-0 rounded-b-none bg-card! px-6 border-b dark:border-zinc-700 focus-visible:border-0 focus-visible:border-b dark:focus-visible:border-zinc-700 focus-visible:border-gray-300 border-gray-300"
             />
-            <DialogClose className="absolute top-5 right-5 cursor-pointer">
+            <DialogClose className="absolute top-5 right-8 md:right-5 cursor-pointer">
               <XIcon size={20} className="text-muted-foreground" />
             </DialogClose>
           </div>
@@ -372,9 +401,9 @@ function SearchDialog({ chats }: { chats: chats[] }) {
                   router.push(`/chat/${chat.id}`);
                 }}
               >
-                <p className="text-ellipsis truncate w-full flex items-center gap-2">
+                <p className="text-ellipsis truncate flex items-center gap-2">
                   <MessageCircle size={20} />
-                  <span>{chat.name}</span>
+                  <span className="max-w-[80%] truncate">{chat.name}</span>
                 </p>
               </div>
             ))}

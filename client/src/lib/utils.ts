@@ -73,3 +73,8 @@ export function getTextFromReactNode(node: ReactNode): string {
 
   return "";
 }
+
+export const isMac = () => {
+  if (typeof window === "undefined") return false;
+  return /Mac|iPhone|iPod|iPad/.test(navigator.userAgent);
+};
