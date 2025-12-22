@@ -10,7 +10,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "./ui/sidebar";
 import {
   Edit,
@@ -60,6 +59,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import logo from "@/assets/docalyx.png";
+import useAuth from "@/hooks/use-auth";
 
 export default function AppSidebar() {
   const { open, toggleSidebar } = useSidebar();
@@ -232,8 +232,9 @@ export default function AppSidebar() {
 }
 
 function AccountDropdown() {
-  const { user, isAuthenticated } = useKindeBrowserClient();
+  const { user, isAuthenticated, userName } = useAuth();
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
 
   if (!isAuthenticated || !user) {
     return null;
@@ -250,9 +251,7 @@ function AccountDropdown() {
             height={20}
             className="rounded-full"
           />
-          <span className="ml-2">
-            {user.given_name} {user.family_name}
-          </span>
+          <span className="ml-2">{userName}</span>
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-xs">
@@ -277,7 +276,10 @@ function AccountDropdown() {
             <Info />
             <span>About</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => router.push(`/profile`)}
+          >
             <User2 />
             <span>My Profile</span>
           </DropdownMenuItem>
