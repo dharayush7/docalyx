@@ -62,7 +62,7 @@ async def message(sid, data):
                 context = ""
 
                 for msg in openai_messages:
-                    context += f"-{msg["role"]}: {msg["content"]}\n"
+                    context += f"-{msg.role}: {msg.content}\n"
 
                 summary = await asyncio.to_thread(
                     gemini_services.get_summary,
