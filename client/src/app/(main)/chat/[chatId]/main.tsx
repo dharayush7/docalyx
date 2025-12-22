@@ -191,7 +191,7 @@ export default function Main({
         {currentScrollHeight > 40 && (
           <div
             className={cn(
-              "fixed bottom-30 transform flex items-center justify-center",
+              "fixed bottom-30 transform flex items-center justify-center transition-all duration-200 ease-linear",
               mobile
                 ? "w-full left-0"
                 : open
