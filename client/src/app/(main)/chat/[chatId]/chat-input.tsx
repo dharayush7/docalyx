@@ -6,6 +6,7 @@ import { useSendMassageMutation } from "./mutation";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function ChatInput({
   chatId,
@@ -76,13 +77,19 @@ export default function ChatInput({
       <div className="absolute bottom-0 bg-background w-full h-14 pt-7">
         <p className="text-xs text-muted-foreground w-full text-center h-full bg-background">
           By sending, you agree to our{" "}
-          <a href="/terms" className="underline hover:text-primary">
+          <Link
+            href="/terms-and-conditions"
+            className="underline hover:text-primary transition-colors ease-in"
+          >
             Terms of Service
-          </a>{" "}
+          </Link>{" "}
           and{" "}
-          <a href="/privacy" className="underline hover:text-primary">
+          <Link
+            href="/privacy-policy"
+            className="underline hover:text-primary transition-colors ease-in"
+          >
             Privacy Policy
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -32,7 +32,6 @@ import { cn, isMac } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import Image from "next/image";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
