@@ -13,6 +13,7 @@ import {
 } from "./ui/sidebar";
 import {
   Edit,
+  InboxIcon,
   Info,
   Loader2,
   MessageCircle,
@@ -193,7 +194,14 @@ export default function AppSidebar() {
                 </p>
               </div>
             )}
-            {chats?.length === 0 && <p>No chats</p>}
+            {chats?.length === 0 && (
+              <div className="flex flex-col justify-center items-center gap-1 mt-7">
+                <InboxIcon className="w-8 h-8 text-muted-foreground" />
+                <p className="text-sm text-muted-foreground font-medium">
+                  No chats
+                </p>
+              </div>
+            )}
             <SidebarGroupContent className="overflow-y-scroll h-full">
               <SidebarMenu>
                 {chats &&

@@ -20,7 +20,7 @@ export default async function page() {
     await prisma.users.create({
       data: {
         email: user.email!,
-        name: user.family_name || "",
+        name: `${user.given_name} ${user.family_name}`,
         kinde_user_id: user.id,
         avatar_url: user.picture,
       },
