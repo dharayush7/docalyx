@@ -25,8 +25,6 @@ export default async function Page({ params }: PageProps<"/doc/[docId]">) {
     },
   });
 
-  console.log(doc);
-
   if (!doc) {
     notFound();
   }

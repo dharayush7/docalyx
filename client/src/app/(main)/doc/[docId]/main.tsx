@@ -17,7 +17,6 @@ export default function Main() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    console.log("eer");
     setTitle("New chat");
     if (socket) {
       socket.on("pdf_read_response", (data: PdfReadResponse) => {

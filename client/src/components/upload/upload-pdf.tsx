@@ -13,11 +13,7 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const allowedDocumentMimeTypes = ["application/pdf"];
 
-export default function UploadPDF({
-  setIsUpladed,
-}: {
-  setIsUpladed: (isUpladed: boolean) => void;
-}) {
+export default function UploadPDF() {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [isDraging, setDraging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -111,7 +107,6 @@ export default function UploadPDF({
                 pdf_key: `${data.data.documentId}.pdf`,
                 user_id: user?.id,
               });
-              setIsUpladed(true);
             } catch (error) {
               toast.error("Failed to upload file");
             } finally {
