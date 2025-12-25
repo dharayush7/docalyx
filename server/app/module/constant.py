@@ -9,5 +9,6 @@ R2_API = os.getenv("R2_API")
 BUCKET_NAME = os.getenv("BUCKET_NAME")
 
 VECTOR_STORE_URL = os.getenv("VECTOR_STORE_URL")
+VECTOR_STORE_API_KEY = os.getenv("VECTOR_STORE_API_KEY")
 
 DATABASE_URL = os.getenv("DATABASE_URL")

@@ -115,8 +115,6 @@ async def message(sid, data):
             await db.commit()
             db.refresh(ast_msg)
 
-            # print(f"Response: {response}")
-
             await sio.emit(
                 "message_response",
                 {"status": "success", "data": {
