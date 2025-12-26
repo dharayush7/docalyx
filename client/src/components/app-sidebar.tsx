@@ -354,7 +354,7 @@ function SearchDialog({ chats }: { chats: chats[] }) {
       <SidebarMenuItem>
         <SidebarMenuButton
           tooltip="Search chats"
-          className="cursor-pointer"
+          className="cursor-pointer group/search"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
@@ -365,15 +365,21 @@ function SearchDialog({ chats }: { chats: chats[] }) {
           <span className="flex justify-between w-full">
             Search chats
             <KbdGroup className="">
-              {isMac() ? (
+              {!isMac() ? (
                 <>
-                  <Kbd>⌘K</Kbd>
+                  <Kbd className="group-hover/search:bg-muted/20! group-hover/search:text-black">
+                    ⌘K
+                  </Kbd>
                 </>
               ) : (
                 <>
-                  <Kbd>Ctrl</Kbd>
-                  <span>+</span>
-                  <Kbd>K</Kbd>
+                  <Kbd className="group-hover/search:bg-muted/20! group-hover/search:text-black">
+                    Ctrl
+                  </Kbd>
+                  <span className="">+</span>
+                  <Kbd className="group-hover/search:bg-muted/20! group-hover/search:text-black">
+                    K
+                  </Kbd>
                 </>
               )}
             </KbdGroup>
