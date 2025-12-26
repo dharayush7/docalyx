@@ -3,6 +3,7 @@ import os
 
 load_dotenv()
 
+PORT = os.getenv("PORT")
 R2_ACCOUNT_ID = os.getenv("R2_ACCOUNT_ID")
 R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
 R2_API = os.getenv("R2_API")

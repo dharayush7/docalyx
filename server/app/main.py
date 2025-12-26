@@ -4,6 +4,7 @@ import socketio
 from fastapi import FastAPI
 from app.socket.server import sio
 import app.socket.event
+from app.module import constant
 
 load_dotenv()
 
@@ -23,7 +24,7 @@ def main():
     uvicorn.run(
         "app.main:app",
         host="0.0.0.0",
-        port=8000,
+        port=int(constant.PORT),
         reload=IS_DEVELOPMENT,
         log_level="debug" if IS_DEVELOPMENT else "info",
     )

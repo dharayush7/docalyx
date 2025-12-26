@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import socketio
+import os
 
 load_dotenv()
 
