@@ -1,9 +1,9 @@
-# PDFAI Server
+# Docalyx Server
 
 ![Build](https://img.shields.io/badge/build-unknown-lightgrey) ![Version](https://img.shields.io/badge/version-dev-blue) ![License](https://img.shields.io/badge/license-TBD-lightgrey)  
 ![Python](https://img.shields.io/badge/python-3.11-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-ASGI-009688) ![Socket.IO](https://img.shields.io/badge/Socket.IO-async-black) ![Qdrant](https://img.shields.io/badge/Vector%20DB-Qdrant-orange) ![Docker](https://img.shields.io/badge/Docker-ready-2496ED)
 
-PDFAI Server is a FastAPI + Socket.IO backend that turns PDFs into searchable, conversational knowledge. It:
+Docalyx Server is a FastAPI + Socket.IO backend that turns PDFs into searchable, conversational knowledge. It:
 
 - Fetches PDFs from Cloudflare R2 and splits content into chunks for retrieval.
 - Embeds and indexes chunks in Qdrant for fast semantic search.
@@ -60,8 +60,8 @@ PDFAI Server is a FastAPI + Socket.IO backend that turns PDFs into searchable, c
   - With auto-reload in development: `uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload`
   - Or: `python -m app.main`
 - Run (Docker)
-  - Build: `docker build -t pdfai-server -f dockerfile .`
-  - Run: `docker run -p 8000:8000 --env-file .env pdfai-server`
+  - Build: `docker build -t Docalyx-server -f dockerfile .`
+  - Run: `docker run -p 8000:8000 --env-file .env Docalyx-server`
 - Socket.IO Events
   - Server uses an ASGI Socket.IO app mounted on FastAPI (`app/main.py:12`).
   - CORS is open by default (`app/socket/server.py:4`).
