@@ -1,6 +1,6 @@
 {
   "name": "docalyx-client",
-  "version": "1.1.51",
+  "version": "v1.1.57",
   "description": "Docalyx is an AI-powered document intelligence tool that lets you upload PDFs, analyze them instantly, and chat with your documents. Ask questions, extract insights, summarize sections, and search context-aware answers without scrolling through pages manually.",
   "private": true,
   "scripts": {

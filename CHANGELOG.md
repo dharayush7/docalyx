@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) where applicable.
 
-## [v1.1.56] - 2025-12-26
+## [v1.1.57] - 2025-12-26
 
 ### Summary
 
-Enhances PDF chat responsiveness, strengthens client–server reliability, and refines environment configuration and documentation. See detailed notes in `release-notes/v1.1.56.md`.
+Enhances PDF chat responsiveness, strengthens client–server reliability, and refines environment configuration and documentation. See detailed notes in `release-notes/v1.1.57.md`.
 
 ### Added
 
@@ -35,8 +35,6 @@ Enhances PDF chat responsiveness, strengthens client–server reliability, and r
 - Degraded answer quality if Qdrant (vector store) is unavailable.
 - Initial PostgreSQL connection failures with invalid credentials or missing DB.
 
-## [v1.1.51] - 2025-12-01
-
 ### Summary
 
 Stabilization release with client and server foundation for PDF analysis and chat; initial environment configuration and tooling setup.
@@ -60,5 +58,5 @@ Stabilization release with client and server foundation for PDF analysis and cha
 
 Links:
 
-- Release notes for `v1.1.56`: `release-notes/v1.1.56.md`
-- Compare: `https://github.com/dharayush7/docalyx/compare/v1.1.51...v1.1.56`
+- Release notes for `v1.1.57`: `release-notes/v1.1.57.md`
+- Compare: `https://github.com/dharayush7/docalyx/compare/v1.1.51...v1.1.57`
