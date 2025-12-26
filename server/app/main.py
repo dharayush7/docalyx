@@ -1,8 +1,11 @@
+from dotenv import load_dotenv
 import os
 import socketio
 from fastapi import FastAPI
 from app.socket.server import sio
 import app.socket.event
+
+load_dotenv()
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 IS_DEVELOPMENT = ENVIRONMENT == "development"
