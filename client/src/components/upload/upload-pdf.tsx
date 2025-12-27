@@ -115,7 +115,7 @@ export default function UploadPDF() {
           }
           setFile(null);
         },
-      }
+      },
     );
   };
   return (
@@ -125,13 +125,13 @@ export default function UploadPDF() {
       onDragLeave={onDragLeave}
       className={cn(
         "ring-0 border border-border md:w-100 sm:w-full",
-        isDraging && "border-primary border-dashed border-2"
+        isDraging && "border-primary border-dashed border-2",
       )}
     >
       <CardContent
         className={cn(
           "flex justify-center",
-          isDraging && "border-primary border-dashed "
+          isDraging && "border-primary border-dashed ",
         )}
       >
         {file ? (
@@ -143,7 +143,7 @@ export default function UploadPDF() {
                 width={40}
                 height={40}
                 className={cn(
-                  (isUploading || mutation.isPending) && "opacity-50"
+                  (isUploading || mutation.isPending) && "opacity-50",
                 )}
               />
               {(isUploading || mutation.isPending) && (

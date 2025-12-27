@@ -30,7 +30,7 @@ export default function ChatList({
               key={message.id}
               className={cn(
                 "flex w-full",
-                message.role === "query" ? "justify-end" : "justify-start"
+                message.role === "query" ? "justify-end" : "justify-start",
               )}
             >
               {message.role === "query" ? (
@@ -39,7 +39,7 @@ export default function ChatList({
                 <AiChatCard message={message} />
               )}
             </div>
-          ))
+          )),
         )}
       {isThinking && (
         <div className="mt-12 flex items-center gap-2 text-muted-foreground">

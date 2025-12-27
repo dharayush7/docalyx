@@ -165,7 +165,7 @@ export default function AppSidebar() {
                   }}
                   className={cn(
                     "cursor-pointer",
-                    pathname === "/" && "bg-primary text-primary-foreground"
+                    pathname === "/" && "bg-primary text-primary-foreground",
                   )}
                 >
                   <Edit />
@@ -216,7 +216,7 @@ export default function AppSidebar() {
                         className={cn(
                           "cursor-pointer",
                           pathname === `/chat/${chat.id}` &&
-                            "bg-primary text-primary-foreground"
+                            "bg-primary text-primary-foreground",
                         )}
                       >
                         <p className="truncate">{chat.name}</p>

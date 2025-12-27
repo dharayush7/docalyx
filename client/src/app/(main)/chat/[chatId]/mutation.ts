@@ -45,7 +45,7 @@ export const useSendMassageMutation = () => {
                 }),
               ],
             };
-          }
+          },
         );
 
         socket?.emit("message", {

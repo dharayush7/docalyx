@@ -22,8 +22,8 @@ export default function Navbar() {
         mobile
           ? "w-full"
           : open
-          ? "w-[calc(100%-var(--sidebar-width))]"
-          : "w-[calc(100%-var(--sidebar-width-icon))]"
+            ? "w-[calc(100%-var(--sidebar-width))]"
+            : "w-[calc(100%-var(--sidebar-width-icon))]",
       )}
     >
       <div className="flex items-center h-full gap-4">
@@ -53,7 +53,7 @@ export default function Navbar() {
             ? open
               ? "-translate-x-[calc(var(--sidebar-width)/2)]"
               : "-translate-x-[calc(50%+var(--sidebar-width-icon)/2)]"
-            : "-translate-x-1/2"
+            : "-translate-x-1/2",
         )}
       >
         {title || "New chat"}

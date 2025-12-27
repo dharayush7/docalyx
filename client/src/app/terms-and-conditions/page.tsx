@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import type { Metadata } from "next";
 
 export default function Page() {
   return (
@@ -215,3 +216,13 @@ export default function Page() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions",
+  description:
+    "Understand the terms governing your use of Docalyx and its services.",
+  alternates: {
+    canonical: "/terms-and-conditions",
+  },
+  robots: { index: true, follow: true },
+};

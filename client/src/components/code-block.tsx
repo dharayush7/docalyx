@@ -27,7 +27,7 @@ export default function CodeBlock({
         onClick={handleCopy}
         className={cn(
           "absolute right-4 top-7 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition text-secondary-foreground rounded flex items-center justify-center cursor-pointer",
-          isMobile && "opacity-100 text-muted-foreground"
+          isMobile && "opacity-100 text-muted-foreground",
         )}
       >
         {copied ? (

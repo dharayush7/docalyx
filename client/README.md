@@ -132,6 +132,37 @@ Format code:
 bun run format
 ```
 
+## 🔎 SEO
+
+- Uses Next.js Metadata API to add SEO tags across pages.
+- Global defaults are defined in `src/app/layout.tsx:20` (title template, description, Open Graph, Twitter, robots, viewport, canonical).
+- Charset is explicitly declared in `src/app/head.tsx:1`.
+- Each page sets a unique title, description, and canonical URL via `export const metadata` or `generateMetadata`.
+
+### Per-page metadata
+
+- Home: `src/app/(main)/page.tsx:6` sets title, description, and canonical `/`.
+- Chat: `src/app/(main)/chat/[chatId]/page.tsx:34` dynamically generates metadata based on the chat and document title.
+- Document: `src/app/(main)/doc/[docId]/page.tsx:34` dynamically generates metadata based on the document title.
+- Profile: `src/app/(main)/profile/page.tsx:23` sets metadata for account management.
+- Auth: `src/app/auth/page.tsx:19` is `noindex, nofollow`. Callback: `src/app/auth/callback/page.tsx:23` is `noindex, nofollow`.
+- Policies: Privacy `src/app/privacy-policy/page.tsx:15` and Terms `src/app/terms-and-conditions/page.tsx:87` include canonical and are indexable.
+
+### Maintaining meta tags
+
+- For new pages, export `metadata` with `title`, `description`, and `alternates.canonical`.
+- For dynamic routes, implement `generateMetadata` and derive values from route params or database.
+- Keep descriptions concise (≤160 chars) and relevant to content.
+- Ensure canonical matches the public URL path; global base uses `KINDE_SITE_URL`.
+
+### Validation
+
+- Run `bun run lint` to check for type and metadata formatting issues.
+- Use online tools:
+  - MetaTags.io or metatags.seo for HTML validation
+  - Open Graph debugger (Facebook) and Twitter Card Validator
+  - Google Lighthouse in Chrome DevTools for SEO checks
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:

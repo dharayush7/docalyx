@@ -40,7 +40,7 @@ export default function ChatInput({
           setIsThinking(true);
           setMessage("");
         },
-      }
+      },
     );
   };
 
@@ -51,8 +51,8 @@ export default function ChatInput({
         mobile
           ? "w-full left-0"
           : open
-          ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
-          : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)"
+            ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
+            : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)",
       )}
     >
       <Textarea

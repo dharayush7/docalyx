@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function isFileSizeGreaterThan(
   file: File,
-  maxSizeInMB: number
+  maxSizeInMB: number,
 ): boolean {
   const sizeInBytes = maxSizeInMB * 1024 * 1024;
   return file.size > sizeInBytes;

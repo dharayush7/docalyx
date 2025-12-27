@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import Main from "./main";
+import type { Metadata } from "next";
 
 export default async function Page({ params }: PageProps<"/doc/[docId]">) {
   const { docId } = await params;
@@ -36,4 +37,39 @@ export default async function Page({ params }: PageProps<"/doc/[docId]">) {
   }
 
   return <Main />;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/doc/[docId]">): Promise<Metadata> {
+  const { docId } = await params;
+  const doc = await prisma.documents.findUnique({
+    where: { id: docId },
+  });
+  if (!doc) {
+    return {
+      title: "Document",
+      description: "Document not found.",
+      robots: { index: false, follow: false },
+      alternates: { canonical: `/doc/${docId}` },
+    };
+  }
+  const title = `Document — ${doc.title}`;
+  const description = `View and analyze the document "${doc.title}".`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/doc/${docId}` },
+    openGraph: {
+      type: "article",
+      url: `/doc/${docId}`,
+      title,
+      description,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+  };
 }

@@ -1,6 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
+import type { Metadata } from "next";
 
 export default async function page() {
   const { getUser } = getKindeServerSession();
@@ -31,3 +32,12 @@ export default async function page() {
 
   return redirect("/");
 }
+
+export const metadata: Metadata = {
+  title: "Auth Callback",
+  description: "Processing your authentication and redirecting.",
+  robots: { index: false, follow: false },
+  alternates: {
+    canonical: "/auth/callback",
+  },
+};

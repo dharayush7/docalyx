@@ -15,7 +15,7 @@ export default function ReactQueryProvider({
           refetchOnWindowFocus: false,
         },
       },
-    })
+    }),
   );
 
   return (

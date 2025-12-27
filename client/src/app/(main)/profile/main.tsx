@@ -50,7 +50,7 @@ export default function Main({ dbUser }: { dbUser: users }) {
                 setError(null);
               }
             },
-          }
+          },
         );
       } else setIsEditingName(false);
     } else setIsEditingName(true);
@@ -107,7 +107,7 @@ export default function Main({ dbUser }: { dbUser: users }) {
                           onChange={(e) => setName(e.target.value)}
                           className={cn(
                             "bg-transparent outline-none text-base font-medium w-full border-b-2 border-muted-foreground/30 focus-visible:outline-none focus-visible:border-primary transition-colors peer",
-                            error ? "border-destructive" : ""
+                            error ? "border-destructive" : "",
                           )}
                         />
                         {error && (

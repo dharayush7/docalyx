@@ -50,7 +50,7 @@ export default function Main({
     queryFn: async ({ pageParam }) => {
       const res = await kyInstance.get(
         `/api/chat/${chat.id}/message`,
-        pageParam ? { searchParams: { cursor: pageParam } } : {}
+        pageParam ? { searchParams: { cursor: pageParam } } : {},
       );
       const body = await res.json<ApiMessageResponse>();
       return body;
@@ -115,7 +115,7 @@ export default function Main({
                   }),
                 ],
               };
-            }
+            },
           );
           setIsThinking(false);
           scrollToBottom();
@@ -195,8 +195,8 @@ export default function Main({
               mobile
                 ? "w-full left-0"
                 : open
-                ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
-                : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)"
+                  ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
+                  : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)",
             )}
           >
             <Button

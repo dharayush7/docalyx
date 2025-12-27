@@ -34,7 +34,7 @@ export async function updateUserProfile({
         params: {
           id: userId,
         },
-      }
+      },
     );
 
     return response.success(null);

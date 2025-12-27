@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 export default function Page() {
   return (
@@ -293,3 +294,13 @@ export default function Page() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Learn how Docalyx collects, uses, and protects your information.",
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+  robots: { index: true, follow: true },
+};
