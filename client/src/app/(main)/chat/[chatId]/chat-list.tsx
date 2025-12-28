@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import { InfiniteData } from "@tanstack/react-query";
-import { InViewHookResponse } from "react-intersection-observer";
-import { ApiMessageResponse } from "@/lib/types";
+import type { InfiniteData } from "@tanstack/react-query";
+import type { InViewHookResponse } from "react-intersection-observer";
+import type { ApiMessageResponse } from "@/lib/types";
 import AiChatCard from "@/components/ai-chat-card";
 import UserChatCard from "@/components/user-chat-card";
 
@@ -30,7 +30,7 @@ export default function ChatList({
               key={message.id}
               className={cn(
                 "flex w-full",
-                message.role === "query" ? "justify-end" : "justify-start",
+                message.role === "query" ? "justify-end" : "justify-start"
               )}
             >
               {message.role === "query" ? (
@@ -39,7 +39,7 @@ export default function ChatList({
                 <AiChatCard message={message} />
               )}
             </div>
-          )),
+          ))
         )}
       {isThinking && (
         <div className="mt-12 flex items-center gap-2 text-muted-foreground">

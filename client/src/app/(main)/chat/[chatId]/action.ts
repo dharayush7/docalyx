@@ -1,10 +1,10 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import response from "@/lib/response";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
+import prisma from "@/lib/prisma";
+import response from "@/lib/response";
 
 export async function sendMessageHandler(params: {
   message: string;

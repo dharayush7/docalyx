@@ -2,7 +2,7 @@
 
 import { SocketContext } from "@/context/socket-context";
 import { SERVER_SOCKET_URL } from "@/lib/constants";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
 export default function SocketProvider({ children }: React.PropsWithChildren) {
@@ -10,7 +10,8 @@ export default function SocketProvider({ children }: React.PropsWithChildren) {
 
   useEffect(() => {
     const socket = io(SERVER_SOCKET_URL, {
-      transports: ["websocket"],
+      path: "/socket.io/",
+      transports: ["polling"],
     });
 
     socket.on("connect", () => {

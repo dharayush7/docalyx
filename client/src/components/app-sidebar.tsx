@@ -165,7 +165,7 @@ export default function AppSidebar() {
                   }}
                   className={cn(
                     "cursor-pointer",
-                    pathname === "/" && "bg-primary text-primary-foreground",
+                    pathname === "/" && "bg-primary text-primary-foreground"
                   )}
                 >
                   <Edit />
@@ -216,7 +216,7 @@ export default function AppSidebar() {
                         className={cn(
                           "cursor-pointer",
                           pathname === `/chat/${chat.id}` &&
-                            "bg-primary text-primary-foreground",
+                            "bg-primary text-primary-foreground"
                         )}
                       >
                         <p className="truncate">{chat.name}</p>
@@ -365,7 +365,7 @@ function SearchDialog({ chats }: { chats: chats[] }) {
           <span className="flex justify-between w-full">
             Search chats
             <KbdGroup className="">
-              {!isMac() ? (
+              {isMac() ? (
                 <>
                   <Kbd className="group-hover/search:bg-muted/20! group-hover/search:text-black">
                     ⌘K

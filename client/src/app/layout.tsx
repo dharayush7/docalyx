@@ -26,7 +26,6 @@ export const metadata: Metadata = {
   description:
     "Docalyx is an AI-powered document intelligence tool that lets you upload PDFs, analyze them instantly, and chat with your documents. Ask questions, extract insights, summarize sections, and search context-aware answers without scrolling through pages manually.",
   applicationName: "Docalyx",
-  viewport: "width=device-width, initial-scale=1",
   robots: {
     index: true,
     follow: true,

@@ -20,7 +20,7 @@ export async function updateUserProfile({
       throw new Error("Missing required environment variables");
     }
 
-    const apiResponse = await axios.patch(
+    const _apiResponse = await axios.patch(
       `${KINDE_MANAGEMENT_API}/v1/user`,
       {
         given_name,
@@ -34,7 +34,7 @@ export async function updateUserProfile({
         params: {
           id: userId,
         },
-      },
+      }
     );
 
     return response.success(null);

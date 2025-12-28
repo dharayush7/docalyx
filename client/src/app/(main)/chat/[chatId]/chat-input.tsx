@@ -1,12 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Loader2, Send } from "lucide-react";
-import React, { useState } from "react";
-import { useSendMassageMutation } from "./mutation";
-import { useSidebar } from "@/components/ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import type React from "react";
+import { Button } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
+import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { useSendMassageMutation } from "./mutation";
 
 export default function ChatInput({
   chatId,
@@ -40,7 +41,7 @@ export default function ChatInput({
           setIsThinking(true);
           setMessage("");
         },
-      },
+      }
     );
   };
 
@@ -51,8 +52,8 @@ export default function ChatInput({
         mobile
           ? "w-full left-0"
           : open
-            ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
-            : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)",
+          ? "w-[calc(100%-var(--sidebar-width))] left-(--sidebar-width)"
+          : "w-[calc(100%-var(--sidebar-width-icon))] left-(--sidebar-width-icon)"
       )}
     >
       <Textarea

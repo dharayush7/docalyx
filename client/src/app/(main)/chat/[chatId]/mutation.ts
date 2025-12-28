@@ -1,13 +1,13 @@
 import {
-  InfiniteData,
-  QueryFilters,
+  type InfiniteData,
+  type QueryFilters,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
 import { sendMessageHandler } from "./action";
 import { toast } from "sonner";
 import useSocket from "@/hooks/use-socket";
-import { ApiMessageResponse } from "@/lib/types";
+import type { ApiMessageResponse } from "@/lib/types";
 
 export const useSendMassageMutation = () => {
   const socket = useSocket();
@@ -45,7 +45,7 @@ export const useSendMassageMutation = () => {
                 }),
               ],
             };
-          },
+          }
         );
 
         socket?.emit("message", {

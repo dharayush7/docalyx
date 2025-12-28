@@ -1,7 +1,7 @@
 "use client";
 
-import UploadPDF from "@/components/upload/upload-pdf";
 import { useEffect } from "react";
+import UploadPDF from "@/components/upload/upload-pdf";
 import useNavbar from "@/hooks/use-navbar";
 
 export default function Main() {
@@ -9,7 +9,7 @@ export default function Main() {
 
   useEffect(() => {
     setTitle("New chat");
-  }, []);
+  }, [setTitle]);
 
   return (
     <div className="flex justify-center items-center w-full h-[calc(100vh-56px)]">
