@@ -4,6 +4,72 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) where applicable.
 
+## [v1.1.65] - 2025-12-29
+
+### New Features
+
+- Syntax-highlighted AI responses in chat  
+  Description: Chat messages render with Markdown and syntax highlighting for improved readability of code and structured outputs.  
+  Reference: CLNT-240 (if applicable)  
+  Author: `@dharayush7`
+- Enhanced loader animations for uploads and long-running operations  
+  Description: Lottie-based loaders deliver clearer progress feedback during document processing and chat streaming.  
+  Reference: UI-102 (if applicable)  
+  Author: `@dharayush7`
+- Optional database SSL CA configuration  
+  Description: `CLIENT_DATABASE_SSL_CA` enables SSL verification for client-side DB connections in stricter environments.  
+  Reference: CONF-021 (if applicable)  
+  Author: `@dharayush7`
+- Expanded onboarding and environment configuration documentation  
+  Description: Clearer guidance around socket URL, storage credentials, and vector store settings to reduce misconfigurations.  
+  Reference: DOCS-200 (if applicable)  
+  Author: `@dharayush7`
+
+### Bug Fixes
+
+- Duplicate chat messages on reconnect (Severity: High)  
+  Description: Resolved race conditions during client–server socket re-sync that caused repeated responses.  
+  Reference: CLNT-231  
+  Author: `@dharayush7`
+- Upload failures with invalid/missing storage credentials (Severity: High)  
+  Description: Added validation and explicit error paths to surface misconfiguration early; upload flow now fails fast.  
+  Reference: SRV-133  
+  Author: `@dharayush7`
+- Theme inconsistencies across component variants/skeletons (Severity: Medium)  
+  Description: Standardized styles for light/dark themes and aligned UI component variants for consistent visuals.  
+  Reference: UI-089  
+  Author: `@dharayush7`
+- Mixed-encoding PDF parsing emitting empty sections (Severity: Medium)  
+  Description: Adjusted parsing and chunking logic to better handle edge cases and preserve content.  
+  Reference: DOC-155  
+  Author: `@dharayush7`
+
+### Performance Improvements
+
+- Reduced socket reconnect latency and stabilized streaming for lengthy responses.  
+  Author: `@dharayush7`
+- Improved document processing throughput for large PDFs via optimized chunking.  
+  Author: `@dharayush7`
+
+### Documentation Updates
+
+- Updated root `README.md` with clearer environment setup and usage instructions.  
+  Author: `@dharayush7`
+- Added detailed release notes `release-notes/v1.1.65.md` with upgrade guidance.  
+  Author: `@dharayush7`
+
+### Deprecated Features
+
+- None in this release.
+
+### Breaking Changes
+
+- None identified for common deployments.
+
+### Version Comparison
+
+- Compare: `https://github.com/dharayush7/docalyx/compare/v1.1.64...v1.1.65`
+
 ## [v1.1.58] - 2025-12-26
 
 ### Summary
