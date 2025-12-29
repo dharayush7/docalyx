@@ -2,7 +2,6 @@ import { messages } from "@/generated/prisma/client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github.css";
 import CodeBlock from "./code-block";
 import {
   cn,
@@ -106,7 +105,7 @@ export default function AiChatCard({ message }: { message: messages }) {
           onClick={handleCopy}
           className={cn(
             "opacity-0 group-hover/chat:opacity-100 transition text-secondary-foreground rounded flex items-center justify-center cursor-pointer",
-            isMobile && "opacity-100",
+            isMobile && "opacity-100"
           )}
         >
           {copied ? <Check size={16} /> : <Copy size={16} />}
