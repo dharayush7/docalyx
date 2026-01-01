@@ -8,6 +8,7 @@ RUN apt-get update \
     build-essential \
     python3 \
     python3-pip \
+    python3-venv \
  && ln -sf /usr/bin/python3 /usr/bin/python \
  && curl -sSL https://install.python-poetry.org | python3 - \
  && rm -rf /var/lib/apt/lists/*
@@ -35,3 +36,17 @@ RUN pnpm -v
 # Bun
 RUN npm install -g bun
 RUN bun -v
+
+RUN apt-get update && \
+    apt-get install -y openssh-server && \
+    mkdir /var/run/sshd
+
+RUN passwd root -d
+
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd","-D"]
