@@ -1,0 +1,8 @@
+{
+  "name": "Docalyx",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "app",
+
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "root"
+}
