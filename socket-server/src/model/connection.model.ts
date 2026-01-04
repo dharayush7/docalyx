@@ -1,4 +1,4 @@
-type ConnectionFields = {
+export type ConnectionFields = {
   socketId: string;
   serverId: number;
   status: string;
@@ -7,7 +7,7 @@ type ConnectionFields = {
   createdAt: Date;
 };
 
-class ConnectionModel implements ConnectionFields {
+export class ConnectionModel implements ConnectionFields {
   socketId: string;
   serverId: number;
   status: string;

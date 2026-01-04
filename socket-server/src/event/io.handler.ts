@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import { redis } from "../lib/redis";
 import { Nullable } from "../lib/type";
 import { getSocketRadisKey, getUserRadisKey } from "../lib/keys";
+import { ConnectionModel } from "../model/connection.model";
 
 export async function connectionOnEventHandler(socket: Socket) {
   console.log("Client connected:", socket.id);
