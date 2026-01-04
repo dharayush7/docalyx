@@ -8,51 +8,44 @@ datasource db {
 }
 
 model chats {
-  id          String     @id @default(uuid()) @db.Uuid
-  name        String     @db.VarChar(255)
-  user_id     String     @db.Uuid
-  document_id String     @unique @db.Uuid
-  created_at  DateTime   @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime   @default(now()) @db.Timestamptz(6)
+  id          String     @id @default(uuid())
+  name        String
+  user_id     String
+  document_id String     @unique
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
   documents   documents  @relation(fields: [document_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   users       users      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   messages    messages[]
-
-  @@index([user_id], map: "ix_chats_user_id")
 }
 
 model documents {
-  id            String   @id @default(uuid()) @db.Uuid
-  title         String   @db.VarChar(255)
+  id            String   @id @default(uuid())
+  title         String
   is_vectorized Boolean  @default(false)
-  created_at    DateTime @default(now()) @db.Timestamptz(6)
-  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
   chats         chats?
-
-  @@index([is_vectorized], map: "ix_documents_vectorized")
 }
 
 model messages {
-  id         String   @id @default(uuid()) @db.Uuid
-  chat_id    String   @db.Uuid
+  id         String   @id @default(uuid())
+  chat_id    String
   role       String
   content    String
   is_summary Boolean  @default(false)
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   chats      chats    @relation(fields: [chat_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([chat_id], map: "ix_messages_chat_id")
-  @@index([chat_id, is_summary], map: "ix_messages_chat_summary")
 }
 
 model users {
-  id            String   @id @default(uuid()) @db.Uuid
-  name          String   @db.VarChar(255)
-  email         String   @unique(map: "ix_users_email") @db.VarChar(255)
-  kinde_user_id String   @unique @db.VarChar(255)
-  avatar_url    String?  @db.VarChar(500)
-  created_at    DateTime @default(now()) @db.Timestamptz(6)
-  updated_at    DateTime @default(now()) @db.Timestamptz(6)
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  kinde_user_id String   @unique
+  avatar_url    String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
   chats         chats[]
 }
